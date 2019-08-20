@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Book } from '../shared/book';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Book } from '../shared/book';
 import { BookDataService } from '../shared/book-data.service';
 // import 'rxjs/add/operator/mergeMap';
 
@@ -10,21 +12,18 @@ import { BookDataService } from '../shared/book-data.service';
   styleUrls: ['book-detail.component.css']
 })
 export class BookDetailComponent implements OnInit {
+  public book$: Observable<Book>;
 
-  public book: Book;
-
-  constructor(private route: ActivatedRoute, private bookService: BookDataService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private bookService: BookDataService
+  ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params: {isbn: string}) => {
-      this.bookService.getBookByIsbn(params.isbn).subscribe(book => this.book = book);
-    });
-
-    /*
-     this.route.params.mergeMap((params: { isbn: string }) => this.bookService.getBookByIsbn(params.isbn))
-     .subscribe(book => this.book = book);
-     */
+    this.book$ = this.route.params.pipe(
+      switchMap((params: { isbn: string }) =>
+        this.bookService.getBookByIsbn(params.isbn)
+      )
+    );
   }
-
 }
