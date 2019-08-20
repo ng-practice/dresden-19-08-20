@@ -1,13 +1,11 @@
-import { RouterTestingModule } from '@angular/router/testing';
-import { BookStaticAsyncDataService } from './../shared/book-static-async-data.service';
-import { BookDataService } from '../shared/book-data.service';
-import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
-
-import { BookDetailComponent } from './book-detail.component';
-import { DebugElement, Component, Directive, Input } from '@angular/core';
+import { Location } from '@angular/common';
+import { Directive, Input } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from "@angular/common";
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { BookDataService } from '../shared/book-data.service';
+import { BookStaticAsyncDataService } from './../shared/book-static-async-data.service';
+import { BookDetailComponent } from './book-detail.component';
 
 // Disable RouterLink for this test
 @Directive({
@@ -25,7 +23,6 @@ export class RouterLinkStubDirective {
   }
 }
 
-
 describe('BookDetailComponent', () => {
   let component: BookDetailComponent;
   let fixture: ComponentFixture<BookDetailComponent>;
@@ -35,19 +32,15 @@ describe('BookDetailComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        BookDetailComponent,
-        RouterLinkStubDirective
-      ],
+      declarations: [BookDetailComponent, RouterLinkStubDirective],
       providers: [
         { provide: BookDataService, useClass: BookStaticAsyncDataService },
         {
           provide: ActivatedRoute,
-          useValue: { params: Observable.of({ isbn: '978-0-20163-361-0' })}
+          useValue: { params: of({ isbn: '978-0-20163-361-0' }) }
         }
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(inject([BookDataService], (service: BookDataService) => {
@@ -64,5 +57,4 @@ describe('BookDetailComponent', () => {
   it('should load the book to the component', () => {
     expect(component.book.isbn).toBe('978-0-20163-361-0');
   });
-
 });
