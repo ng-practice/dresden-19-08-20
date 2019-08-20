@@ -6,9 +6,9 @@ import { TestBed } from '@angular/core/testing';
 import { Book } from './book';
 import { BookDataService } from './book-data.service';
 
-fdescribe('BookStaticDataService', () => {
+describe('BookStaticDataService', () => {
   let service: BookDataService;
-  let httpMock: HttpTestingController;
+  let backend: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [BookDataService],
@@ -16,12 +16,12 @@ fdescribe('BookStaticDataService', () => {
     });
 
     service = TestBed.get(BookDataService);
-    httpMock = TestBed.get(HttpTestingController);
+    backend = TestBed.get(HttpTestingController);
   });
 
   it('should return all books', () => {
     service.getBooks().subscribe(books => expect(books.length).toBe(3));
-    httpMock.expectOne('http://localhost:4730/books').flush(staticBookData);
+    backend.expectOne('http://localhost:4730/books').flush(staticBookData);
   });
 
   it('should return a single book', () => {
@@ -29,7 +29,7 @@ fdescribe('BookStaticDataService', () => {
 
     service.getBookByIsbn(isbn).subscribe(book => expect(book.isbn).toBe(isbn));
 
-    httpMock
+    backend
       .expectOne(`http://localhost:4730/books/${isbn}`)
       .flush(staticBookData[0]);
   });
@@ -41,7 +41,7 @@ fdescribe('BookStaticDataService', () => {
       .createBook({ isbn } as Book)
       .subscribe(book => expect(book.isbn).toBe(isbn));
 
-    const req = httpMock.expectOne(`http://localhost:4730/books`);
+    const req = backend.expectOne(`http://localhost:4730/books`);
     expect(req.request.method).toBe('POST');
     req.flush({ isbn });
   });
@@ -54,7 +54,7 @@ fdescribe('BookStaticDataService', () => {
       .updateBook(isbn, update)
       .subscribe(book => expect(book.title).toBe(update.title));
 
-    const req = httpMock.expectOne(`http://localhost:4730/books/${isbn}`);
+    const req = backend.expectOne(`http://localhost:4730/books/${isbn}`);
     expect(req.request.method).toBe('PATCH');
     req.flush(update);
   });
