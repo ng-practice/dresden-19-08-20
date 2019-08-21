@@ -3,7 +3,7 @@ import { Book } from '../shared/book';
 import { createSuccess, loadAllSuccess } from './book.actions';
 
 export interface BookSlice {
-  all: Book[];
+  all: Readonly<Book[]>;
 }
 
 const initialState: BookSlice = { all: [] };
