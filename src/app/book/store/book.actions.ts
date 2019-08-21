@@ -1,6 +1,15 @@
 import { createAction, props } from '@ngrx/store';
 import { Book } from '../shared/book';
 
+export const create = createAction(
+  '[Book/API] Create new book',
+  props<{ book: Book }>()
+);
+export const createSuccess = createAction(
+  '[Book/API] Create new book successful',
+  props<{ book: Book }>()
+);
+
 // trigger http request loading books
 export const loadAll = createAction('[Book/API] Load all books');
 

@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { BookDataService } from '../shared/book-data.service';
-import { loadAll, loadAllError, loadAllSuccess } from './book.actions';
+import {
+  create,
+  createSuccess,
+  loadAll,
+  loadAllError,
+  loadAllSuccess
+} from './book.actions';
 
 @Injectable()
 export class BookEffects {
@@ -21,8 +28,26 @@ export class BookEffects {
     )
   );
 
+  create$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(create),
+      switchMap(({ book }) => this.bookService.createBook(book)),
+      map(createdBook => createSuccess({ book: createdBook }))
+    )
+  );
+
+  navigateAfterBookCreation$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createSuccess),
+        tap(() => this.router.navigateByUrl('/'))
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
-    private bookService: BookDataService
+    private bookService: BookDataService,
+    private router: Router
   ) {}
 }

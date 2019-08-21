@@ -1,10 +1,10 @@
 import { Action, combineReducers } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import { BookSlice, reducer } from './book.reducer';
+import { bookReducer, BookSlice } from './book.reducer';
 
 export const bookFeatureName = 'book';
 
-interface BookFeature {
+export interface BookFeature {
   collection: BookSlice;
 }
 
@@ -14,6 +14,6 @@ export interface State extends fromRoot.State {
 
 export function bookReducers(state: BookFeature, action: Action) {
   return combineReducers<BookFeature>({
-    collection: reducer
+    collection: bookReducer
   })(state, action);
 }
