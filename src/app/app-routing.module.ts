@@ -9,9 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'books',
-    loadChildren() {
-      return import('./book/book.module').then(m => m.BookModule);
-    }
+    loadChildren: () => import('./book/book.module').then(m => m.BookModule)
   }
 ];
 
