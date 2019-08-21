@@ -10,9 +10,15 @@ const initialState: BookSlice = { all: [] };
 
 export const reducer = createReducer(
   initialState,
-  on(loadAllSuccess, (state, action) => {
-    const newState = { ...state };
-    newState.all = action.books;
-    return newState;
-  })
+  on(loadAllSuccess, (slice, { books }) => ({
+    ...slice,
+    all: books
+  }))
+  // Longer version
+  //
+  // on(loadAllSuccess, (state, action) => {
+  //   const newState = { ...state };
+  //   newState.all = action.books;
+  //   return newState;
+  // })
 );

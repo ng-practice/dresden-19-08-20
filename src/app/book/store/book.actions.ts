@@ -9,3 +9,7 @@ export const loadAllSuccess = createAction(
   '[Book/API] Load all books successful',
   props<{ books: Book[] }>()
 );
+
+export const loadAllError = createAction(
+  '[Book/API] Books could not be loaded'
+);

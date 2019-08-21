@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
@@ -11,6 +12,7 @@ import { BookRoutingModule } from './book-routing.module';
 import { BookComponent } from './book.component';
 import { BookDataService } from './shared/book-data.service';
 import { bookFeatureName, bookReducers } from './store';
+import { BookEffects } from './store/book.effects';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import { bookFeatureName, bookReducers } from './store';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    StoreModule.forFeature(bookFeatureName, bookReducers)
+    StoreModule.forFeature(bookFeatureName, bookReducers),
+    EffectsModule.forFeature([BookEffects])
   ],
   declarations: [
     BookComponent,
