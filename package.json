@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "~8.1.0",
     "@angular/router": "~8.1.0",
     "@ngrx/effects": "^8.2.0",
-    "@ngrx/store": "^8.0.0",
+    "@ngrx/store": "^8.2.0",
     "@ngrx/store-devtools": "^8.2.0",
     "bootstrap": "^4.3.1",
     "core-js": "^3.1.4",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.801.0",
     "@angular/cli": "~8.1.0",
+    "@ngrx/schematics": "^8.2.0",
     "@angular/compiler-cli": "~8.1.0",
     "@angular/language-service": "~8.1.0",
     "@types/jasmine": "~3.3.8",
