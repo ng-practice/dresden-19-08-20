@@ -1,3 +1,4 @@
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Book } from '../shared/book';
 import {
@@ -6,18 +7,25 @@ import {
   updateBookSuccess
 } from './book.actions';
 
-export interface BookSlice {
+export interface BookSlice extends EntityState<Book> {
   all: Readonly<Book[]>;
 }
 
-const initialState: BookSlice = { all: [] };
+const adapter = createEntityAdapter<Book>({
+  selectId: book => book.isbn
+});
+
+const initialState: BookSlice = adapter.getInitialState({
+  all: []
+});
 
 export const bookReducer = createReducer(
   initialState,
-  on(loadAllSuccess, (slice, { books }) => ({
-    ...slice,
-    all: books
-  })),
+  on(loadAllSuccess, (slice, { books }) => adapter.addAll(books, slice)),
+  // on(loadAllSuccess, (slice, { books }) => ({
+  //   ...slice,
+  //   all: books,
+  // })),
   on(createSuccess, (slice, { book }) => ({
     ...slice,
     all: [book, ...slice.all]
