@@ -15,7 +15,7 @@ import {
 } from './book.actions';
 import { BookEffects } from './book.effects';
 
-fdescribe('Effect: Book', () => {
+describe('Effect: Book', () => {
   let actions$: Actions;
   let service: BookDataService;
   let effects: BookEffects;
