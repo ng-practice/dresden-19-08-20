@@ -5,8 +5,19 @@ export const create = createAction(
   '[Book/API] Create new book',
   props<{ book: Book }>()
 );
+
 export const createSuccess = createAction(
   '[Book/API] Create new book successful',
+  props<{ book: Book }>()
+);
+
+export const updateBook = createAction(
+  '[Book/API] Update book',
+  props<{ book: Book }>()
+);
+
+export const updateBookSuccess = createAction(
+  '[Book/API] Update book success',
   props<{ book: Book }>()
 );
 

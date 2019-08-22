@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 import { BookDataService } from '../shared/book-data.service';
 import {
   create,
   createSuccess,
   loadAll,
   loadAllError,
-  loadAllSuccess
+  loadAllSuccess,
+  updateBook,
+  updateBookSuccess
 } from './book.actions';
 
 @Injectable()
@@ -43,6 +45,14 @@ export class BookEffects {
         tap(() => this.router.navigateByUrl('/'))
       ),
     { dispatch: false }
+  );
+
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateBook),
+      exhaustMap(({ book }) => this.bookService.updateBook(book.isbn, book)),
+      map(updatedBook => updateBookSuccess({ book: updatedBook }))
+    )
   );
 
   constructor(
