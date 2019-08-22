@@ -8,9 +8,10 @@ describe('View: Book list', () => {
   });
 
   context('Book creation', () => {
+    const isbn = 'f-dlr93485323';
+
     it('adds a book to the list after creating it', () => {
       let count = 0;
-      const isbn = Math.random().toString(36);
 
       cy.get('[data-testid=book-item]')
         .as('books')
@@ -23,5 +24,9 @@ describe('View: Book list', () => {
 
       cy.get('@books').then(books => expect(books.length).to.eq(count + 1));
     });
+
+    afterEach(() =>
+      cy.request('DELETE', `http://localhost:4730/books/${isbn}`)
+    );
   });
 });
