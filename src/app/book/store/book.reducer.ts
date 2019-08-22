@@ -7,17 +7,13 @@ import {
   updateBookSuccess
 } from './book.actions';
 
-export interface BookSlice extends EntityState<Book> {
-  all: Readonly<Book[]>;
-}
+export interface BookSlice extends EntityState<Book> {}
 
 export const adapter = createEntityAdapter<Book>({
   selectId: book => book.isbn
 });
 
-const initialState: BookSlice = adapter.getInitialState({
-  all: []
-});
+const initialState: BookSlice = adapter.getInitialState();
 
 export const bookReducer = createReducer(
   initialState,
