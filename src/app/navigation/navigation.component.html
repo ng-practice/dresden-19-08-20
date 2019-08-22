@@ -5,14 +5,17 @@
     </a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['books']">List all books 📚
+        <a class="nav-link" [routerLink]="['books']"
+          >List all books 📚
           <span class="sr-only">(current)</span>
         </a>
       </li>
     </ul>
     <span>
       <a [routerLink]="['books', 'new']">
-        <button class="btn btn-success">New Book</button>
+        <button class="btn btn-success" data-testid="create-navigation-button">
+          New Book
+        </button>
       </a>
     </span>
   </div>
