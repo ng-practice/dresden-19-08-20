@@ -11,7 +11,7 @@ import { allBooks } from '../store/book.selectors';
   styleUrls: ['book-list.component.css']
 })
 export class BookListComponent {
-  books$: Observable<Book[]>;
+  books$: Observable<Readonly<Book[]>>;
 
   constructor(private store: Store<State>) {
     this.books$ = this.store.pipe(select(allBooks));
