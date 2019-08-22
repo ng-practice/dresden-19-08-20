@@ -19,7 +19,5 @@ export const bookReducer = createReducer(
   initialState,
   on(loadAllSuccess, (slice, { books }) => adapter.addAll(books, slice)),
   on(createSuccess, (slice, { book }) => adapter.addOne(book, slice)),
-  on(updateBookSuccess, (slice, { book }) =>
-    adapter.updateOne({ id: book.isbn, changes: book }, slice)
-  )
+  on(updateBookSuccess, (slice, { book }) => adapter.updateOne(book, slice))
 );

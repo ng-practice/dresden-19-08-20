@@ -5,12 +5,12 @@ import { adapter } from './book.reducer';
 
 const bookFeature = createFeatureSelector<BookFeature>(bookFeatureName);
 
-const getEntitiesState = createSelector(
+const bookEntitiesState = createSelector(
   bookFeature,
   book => book.collection
 );
 
-export const { selectAll: allBooks } = adapter.getSelectors(getEntitiesState);
+export const { selectAll: allBooks } = adapter.getSelectors(bookEntitiesState);
 
 export const currentBook = createSelector(
   allBooks,

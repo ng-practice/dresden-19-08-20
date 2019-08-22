@@ -18,7 +18,12 @@ export const updateBook = createAction(
 
 export const updateBookSuccess = createAction(
   '[Book/API] Update book success',
-  props<{ book: Book }>()
+  (payload: { book: Book }) => ({
+    book: {
+      id: payload.book.isbn,
+      changes: payload.book
+    }
+  })
 );
 
 // trigger http request loading books
