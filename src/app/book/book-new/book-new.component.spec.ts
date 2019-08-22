@@ -1,12 +1,14 @@
-import { RouterTestingModule } from '@angular/router/testing';
-import { BookStaticAsyncDataService } from './../shared/book-static-async-data.service';
-import { BookDataService } from '../shared/book-data.service';
-import { ComponentFixture, TestBed, async, inject} from '@angular/core/testing';
-
-import { BookNewComponent } from './book-new.component';
-import { DebugElement } from '@angular/core';
+import {
+  async,
+  ComponentFixture,
+  inject,
+  TestBed
+} from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { BookDataService } from '../shared/book-data.service';
+import { BookStaticAsyncDataService } from './../shared/book-static-async-data.service';
+import { BookNewComponent } from './book-new.component';
 
 describe('BookNewComponent', () => {
   let component: BookNewComponent;
@@ -15,23 +17,22 @@ describe('BookNewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        BookNewComponent
-      ],
+      declarations: [BookNewComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,
         RouterTestingModule.withRoutes([])
       ],
-      providers: [{ provide: BookDataService, useClass: BookStaticAsyncDataService }]
-    })
-      .compileComponents();
+      providers: [
+        { provide: BookDataService, useClass: BookStaticAsyncDataService }
+      ]
+    }).compileComponents();
   });
 
   beforeEach(async(() => {
     fixture = TestBed.createComponent(BookNewComponent);
     component = fixture.componentInstance;
-    component.ngOnInit();
+    // component.ngOnInit();
     fixture.detectChanges();
     compiled = fixture.debugElement.nativeElement;
   }));
@@ -51,18 +52,20 @@ describe('BookNewComponent', () => {
     expect(errors['required']).toBeTruthy();
   });
 
-  it('should call createBook on submit', inject([BookDataService], (service: BookDataService) => {
-    const serviceSpy = spyOn(service, 'createBook').and.callThrough();
+  it('should call createBook on submit', inject(
+    [BookDataService],
+    (service: BookDataService) => {
+      const serviceSpy = spyOn(service, 'createBook').and.callThrough();
 
-    component.form.controls['isbn'].setValue('1234567890123');
-    component.form.controls['title'].setValue('Test Book');
-    component.form.controls['author'].setValue('A author');
+      component.form.controls['isbn'].setValue('1234567890123');
+      component.form.controls['title'].setValue('Test Book');
+      component.form.controls['author'].setValue('A author');
 
-    expect(component.form.valid).toBeTruthy();
+      expect(component.form.valid).toBeTruthy();
 
-    component.onSubmit();
+      component.onSubmit();
 
-    expect(serviceSpy.calls.any()).toBeTruthy();
-
-  }));
+      expect(serviceSpy.calls.any()).toBeTruthy();
+    }
+  ));
 });
