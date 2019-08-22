@@ -38,10 +38,10 @@ export class BookEffects {
     )
   );
 
-  navigateAfterBookCreation$ = createEffect(
+  navigateOnSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(createSuccess),
+        ofType(createSuccess, updateBookSuccess),
         tap(() => this.router.navigateByUrl('/'))
       ),
     { dispatch: false }
