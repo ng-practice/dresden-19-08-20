@@ -14,7 +14,7 @@ fdescribe('Effect: Book', () => {
   let effects: BookEffects;
 
   beforeEach(() => {
-    service = mock(service);
+    service = mock(BookDataService);
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
