@@ -1,13 +1,16 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { BookFeature, bookFeatureName } from '.';
 import { selectRouteParam } from '../../reducers';
+import { adapter } from './book.reducer';
 
 const bookFeature = createFeatureSelector<BookFeature>(bookFeatureName);
 
-export const allBooks = createSelector(
+const getEntitiesState = createSelector(
   bookFeature,
-  context => context.collection.all
+  book => book.collection
 );
+
+export const { selectAll: allBooks } = adapter.getSelectors(getEntitiesState);
 
 export const currentBook = createSelector(
   allBooks,

@@ -11,7 +11,7 @@ export interface BookSlice extends EntityState<Book> {
   all: Readonly<Book[]>;
 }
 
-const adapter = createEntityAdapter<Book>({
+export const adapter = createEntityAdapter<Book>({
   selectId: book => book.isbn
 });
 
@@ -22,18 +22,8 @@ const initialState: BookSlice = adapter.getInitialState({
 export const bookReducer = createReducer(
   initialState,
   on(loadAllSuccess, (slice, { books }) => adapter.addAll(books, slice)),
-  // on(loadAllSuccess, (slice, { books }) => ({
-  //   ...slice,
-  //   all: books,
-  // })),
-  on(createSuccess, (slice, { book }) => ({
-    ...slice,
-    all: [book, ...slice.all]
-  })),
-  on(updateBookSuccess, (slice, { book: updatedBook }) => ({
-    ...slice,
-    all: slice.all.map(book =>
-      book.isbn === updatedBook.isbn ? updatedBook : book
-    )
-  }))
+  on(createSuccess, (slice, { book }) => adapter.addOne(book, slice)),
+  on(updateBookSuccess, (slice, { book }) =>
+    adapter.updateOne({ id: book.isbn, changes: book }, slice)
+  )
 );
