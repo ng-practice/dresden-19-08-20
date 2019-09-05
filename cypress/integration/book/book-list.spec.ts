@@ -1,9 +1,18 @@
 describe('View: Book list', () => {
-  beforeEach(() => cy.visit('http://localhost:4200'));
+  beforeEach(() => {
+    cy.server();
+    cy.route('GET', 'http://localhost:4730/books', 'fixture:books.json');
+
+    cy.visit('http://localhost:4200');
+  });
 
   context('When the page is loaded', () => {
     it('displays the title "BookMonkey"', () => {
       cy.get('.navbar-brand').contains('BookMonkey');
+    });
+
+    it('loads some books', () => {
+      cy.get('[data-testid=book-item]').should('have.length', 2);
     });
   });
 
